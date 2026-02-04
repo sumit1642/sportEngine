@@ -1,7 +1,7 @@
 {
 	"name": "sportengine",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Trying to learn Websockets",
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon index.js"
