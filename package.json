@@ -5,16 +5,18 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon index.js",
+		"start": "node index.js",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
-		"crud": "node crud.js"
+		"db:studio": "drizzle-kit studio",
+		"crud": "node db/crud.js"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"type": "module",
 	"dependencies": {
-		"dotenv": "^17.2.3",
+		"dotenv": "^17.2.4",
 		"drizzle-orm": "^0.45.1",
 		"express": "^5.2.1",
 		"pg": "^8.18.0"
