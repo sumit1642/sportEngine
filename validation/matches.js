@@ -1,11 +1,11 @@
 import z from "zod";
 
-// Match status  costant
-export const MATCH_STATUS = {
+// Match status constant
+export const MATCH_STATUS = Object.freeze({
 	SCHEDULED: "scheduled",
 	LIVE: "live",
 	FINISHED: "finished",
-};
+});
 
 // Schema for listing matches query params
 export const listMatchesQuerySchema = z.object({ limit: z.coerce.number().int().positive().max(100).optional() });
@@ -15,7 +15,7 @@ export const matchIdParamSchema = z.object({
 	id: z.coerce.number().int().positive(),
 });
 
-const isoDateString = z.string().refine((val) => isNaN(Date.parse(val)), { message: "Invalid ISO string" });
+const isoDateString = z.string().refine((val) => !isNaN(Date.parse(val)), { message: "Invalid ISO date string" });
 
 // Schema for creating a match
 export const createMatchSchema = z
@@ -29,7 +29,7 @@ export const createMatchSchema = z
 		awayScore: z.coerce.number().int().nonnegative().optional(),
 	})
 	.superRefine((data, ctx) => {
-		if (new Date(data.endTime <= new Date(data.startTime))) {
+		if (new Date(data.endTime) <= new Date(data.startTime)) {
 			ctx.addIssue({
 				code: z.ZodIssueCode.custom,
 				path: ["endTime"],
