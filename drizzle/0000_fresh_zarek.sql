@@ -1,4 +1,3 @@
--- Active: 1770376004469@@ep-dry-hill-ai93hbx5-pooler.c-4.us-east-1.aws.neon.tech@5432@neondb
 CREATE TYPE "public"."match_status" AS ENUM('scheduled', 'live', 'finished');--> statement-breakpoint
 CREATE TABLE "commentary" (
 	"id" serial PRIMARY KEY NOT NULL,
