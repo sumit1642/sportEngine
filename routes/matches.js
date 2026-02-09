@@ -11,21 +11,21 @@ matchRouter.get("/", (req, res) => {
 });
 
 matchRouter.post("/", async (req, res) => {
-	const parsed = createMatchSchema.safeParse(req.body);
+	const parsedData = createMatchSchema.safeParse(req.body);
 
-	if (!parsed.success) {
-		return res.status(400).json({ error: "Invalid Payload", details: JSON.stringify(parsed.error.issues) });
+	if (!parsedData.success) {
+		return res.status(400).json({ error: "Invalid Payload", details: JSON.stringify(parsedData.error.issues) });
 	}
 
 	const {
 		data: { startTime, endTime, homeScore, awayScore },
-	} = parsed;
+	} = parsedData;
 
 	try {
 		const [event] = await db
 			.insert(matches)
 			.values({
-				...parsed.data,
+				...parsedData.data,
 				startTime: new Date(startTime),
 				endTime: new Date(endTime),
 				homeScore: homeScore ?? 0,
