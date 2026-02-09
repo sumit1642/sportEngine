@@ -22,6 +22,7 @@ matchRouter.post("/", async (req, res) => {
 	} = parsedData;
 
 	try {
+		// .returning() => It returns an array and that's why we are de-strcutring that array, [event]=> gets the value from .returning()
 		const [event] = await db
 			.insert(matches)
 			.values({
