@@ -38,9 +38,31 @@ export function attachWebsocketServer(server) {
 	});
 
 	wss.on("connection", (socket) => {
+		socket.isAlive = true;
+		// Mark the socket as alive when a pong is received
+		socket.on("pong", () => {
+			socket.isAlive = true;
+		});
+
 		sendJson(socket, { type: "welcome" });
 
 		socket.on("error", console.error);
+	});
+
+	// Ping clients every 30 seconds to keep connections alive and detect dead connections
+	const interval = setInterval(() => {
+		wss.clients.forEach((socket) => {
+			if (socket.isAlive === false) {
+				return socket.terminate();
+			}
+
+			socket.isAlive = false;
+			socket.ping();
+		});
+	}, 30000);
+	// Clean up the interval when the server closes  otherwise it will keep the Node.js process alive
+	wss.on("close", () => {
+		clearInterval(interval);
 	});
 
 	/**
