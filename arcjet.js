@@ -1,9 +1,14 @@
-import arcjet, { detectBot, shield, slidingWindow } from "arcjet";
+import arcjet, { detectBot, shield, slidingWindow, createRemoteClient } from "@arcjet/node";
 
 const ARCJET_KEY = process.env.ARCJET_KEY;
 if (!ARCJET_KEY) throw new Error("Missing ARCJET_KEY environment variable");
 
 const ARCJET_MODE = process.env.ARCJET_MODE === "DRY_RUN" ? "DRY_RUN" : "LIVE";
+
+const client = createRemoteClient({
+	baseUrl: process.env.ARCJET_BASE_URL,
+	timeout: 1000,
+});
 
 export const httpArcjet =
 	ARCJET_KEY ?
@@ -14,6 +19,7 @@ export const httpArcjet =
 				detectBot({ mode: ARCJET_MODE, allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:PREVIEW"] }),
 				slidingWindow({ mode: ARCJET_MODE, interval: "10s", max: 50 }),
 			],
+			client,
 		})
 	:	null;
 
@@ -26,6 +32,7 @@ export const wsArcjet =
 				detectBot({ mode: ARCJET_MODE, allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:PREVIEW"] }),
 				slidingWindow({ mode: ARCJET_MODE, interval: "2s", max: 50 }),
 			],
+			client,
 		})
 	:	null;
 
