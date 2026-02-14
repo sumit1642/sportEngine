@@ -28,4 +28,3 @@ server.listen(PORT, HOST, () => {
 	console.log(`Server is running on baseUrl : ${baseUrl}`);
 	console.log(`Websocket Server running on URL: ${baseUrl.replace("http", "ws")}/ws`);
 });
-8
