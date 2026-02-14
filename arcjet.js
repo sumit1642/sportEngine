@@ -3,7 +3,7 @@ import arcjet, { detectBot, shield, slidingWindow } from "arcjet";
 const ARCJET_KEY = process.env.ARCJET_KEY;
 if (!ARCJET_KEY) throw new Error("Missing ARCJET_KEY environment variable");
 
-const ARCJET_MODE = process.env.ARCJET_MODE === "DRY_RUN" ? "DRY_RUN" : "PRODUCTION";
+const ARCJET_MODE = process.env.ARCJET_MODE === "DRY_RUN" ? "DRY_RUN" : "LIVE";
 
 export const httpArcjet =
 	ARCJET_KEY ?
