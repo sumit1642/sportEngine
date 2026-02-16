@@ -1,3 +1,4 @@
+import { baseUrl } from "@arcjet/env";
 import arcjet, { detectBot, shield, slidingWindow, createRemoteClient } from "@arcjet/node";
 
 const ARCJET_KEY = process.env.ARCJET_KEY;
@@ -6,7 +7,7 @@ if (!ARCJET_KEY) throw new Error("Missing ARCJET_KEY environment variable");
 const ARCJET_MODE = process.env.ARCJET_MODE === "DRY_RUN" ? "DRY_RUN" : "LIVE";
 
 const client = createRemoteClient({
-	baseUrl: process.env.ARCJET_BASE_URL,
+	baseUrl: baseUrl(process.env),
 	timeout: 1000,
 });
 
